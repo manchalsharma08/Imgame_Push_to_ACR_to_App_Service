@@ -25,8 +25,8 @@ stages:
       displayName: 'Build an image'
       inputs:
         containerregistrytype: 'Azure Container Registry'
-        azureSubscription: 'ServiceConnection-Manual'
-        azureContainerRegistry: '{"loginServer":"avinacr.azurecr.io", "id" : "/subscriptions/1bc909d9-512d-44e7-a90d-0b07c70674d6/resourceGroups/rg-demo/providers/Microsoft.ContainerRegistry/registries/avinacr"}'
+        azureSubscription: 'ACR-K8S-SC-Devopsjio'
+        azureContainerRegistry: '{"loginServer":"acrado1111.azurecr.io", "id" : "/subscriptions/cdad125a-4251-4921-9b54-69011bb91811/resourceGroups/aks-ado-rg/providers/Microsoft.ContainerRegistry/registries/acrado1111"}'
         action: 'Build an image'
         dockerFile: 'Dockerfile'
         imageName: '$(imageName)'
@@ -34,14 +34,14 @@ stages:
       displayName: 'Push an image'
       inputs:
         containerregistrytype: 'Azure Container Registry'
-        azureSubscription: 'ServiceConnection-Manual'
-        azureContainerRegistry: '{"loginServer":"avinacr.azurecr.io", "id" : "/subscriptions/1bc909d9-512d-44e7-a90d-0b07c70674d6/resourceGroups/rg-demo/providers/Microsoft.ContainerRegistry/registries/avinacr"}'
+        azureSubscription: 'ACR-K8S-SC-Devopsjio'
+        azureContainerRegistry: '{"loginServer":"acrado1111.azurecr.io", "id" : "/subscriptions/cdad125a-4251-4921-9b54-69011bb91811/resourceGroups/aks-ado-rg/providers/Microsoft.ContainerRegistry/registries/acrado1111"}'
         action: 'Push an image'
         imageName: '$(imageName)'
     - task: AzureWebAppContainer@1
       displayName: 'Deploy: avin-docker-dev'
       inputs:
-        azureSubscription: 'ServiceConnection-Manual'
+        azureSubscription: 'ACR-K8S-SC-Devopsjio'
         appName: 'avin-docker-dev'
         containers: 'avinacr.azurecr.io/$(imageName)'
       condition: eq(variables['Build.SourceBranchName'], 'dev')
@@ -49,7 +49,7 @@ stages:
     - task: AzureWebAppContainer@1
       displayName: 'Deploy: avin-docker-qa'
       inputs:
-        azureSubscription: 'ServiceConnection-Manual'
+        azureSubscription: 'ACR-K8S-SC-Devopsjio'
         appName: 'avin-docker-qa'
         containers: 'avinacr.azurecr.io/$(imageName)'
       condition: eq(variables['Build.SourceBranchName'], 'main')
